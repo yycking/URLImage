@@ -12,6 +12,11 @@
 		AF103CB21E5D37D1007A1211 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF103CB01E5D37D1007A1211 /* Main.storyboard */; };
 		AF103CB41E5D37D1007A1211 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF103CB31E5D37D1007A1211 /* Assets.xcassets */; };
 		AF103CB71E5D37D1007A1211 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF103CB51E5D37D1007A1211 /* LaunchScreen.storyboard */; };
+		AF103CC01E5D3816007A1211 /* URLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF103CBF1E5D3816007A1211 /* URLImage.swift */; };
+		AF103CC21E5D3824007A1211 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = AF103CC11E5D3824007A1211 /* user.png */; };
+		AF103CC41E5D3862007A1211 /* UIImageView+URLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF103CC31E5D3862007A1211 /* UIImageView+URLImage.swift */; };
+		AF103CC71E5D38F2007A1211 /* URLImageCache.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AF103CC51E5D38F2007A1211 /* URLImageCache.xcdatamodeld */; };
+		AF103CC91E5D3B00007A1211 /* URLImageCache+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF103CC81E5D3B00007A1211 /* URLImageCache+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +27,11 @@
 		AF103CB31E5D37D1007A1211 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AF103CB61E5D37D1007A1211 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AF103CB81E5D37D1007A1211 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AF103CBF1E5D3816007A1211 /* URLImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLImage.swift; sourceTree = "<group>"; };
+		AF103CC11E5D3824007A1211 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user.png; sourceTree = "<group>"; };
+		AF103CC31E5D3862007A1211 /* UIImageView+URLImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+URLImage.swift"; sourceTree = "<group>"; };
+		AF103CC61E5D38F2007A1211 /* URLImageCache.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = URLImageCache.xcdatamodel; sourceTree = "<group>"; };
+		AF103CC81E5D3B00007A1211 /* URLImageCache+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLImageCache+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +48,7 @@
 		AF103CA01E5D37D1007A1211 = {
 			isa = PBXGroup;
 			children = (
+				AF103CBE1E5D3816007A1211 /* URLImage */,
 				AF103CAB1E5D37D1007A1211 /* URLImageExample */,
 				AF103CAA1E5D37D1007A1211 /* Products */,
 			);
@@ -60,8 +71,20 @@
 				AF103CB31E5D37D1007A1211 /* Assets.xcassets */,
 				AF103CB51E5D37D1007A1211 /* LaunchScreen.storyboard */,
 				AF103CB81E5D37D1007A1211 /* Info.plist */,
+				AF103CC11E5D3824007A1211 /* user.png */,
 			);
 			path = URLImageExample;
+			sourceTree = "<group>";
+		};
+		AF103CBE1E5D3816007A1211 /* URLImage */ = {
+			isa = PBXGroup;
+			children = (
+				AF103CBF1E5D3816007A1211 /* URLImage.swift */,
+				AF103CC31E5D3862007A1211 /* UIImageView+URLImage.swift */,
+				AF103CC51E5D38F2007A1211 /* URLImageCache.xcdatamodeld */,
+				AF103CC81E5D3B00007A1211 /* URLImageCache+.swift */,
+			);
+			path = URLImage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,6 +149,7 @@
 			files = (
 				AF103CB71E5D37D1007A1211 /* LaunchScreen.storyboard in Resources */,
 				AF103CB41E5D37D1007A1211 /* Assets.xcassets in Resources */,
+				AF103CC21E5D3824007A1211 /* user.png in Resources */,
 				AF103CB21E5D37D1007A1211 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,6 +162,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF103CAF1E5D37D1007A1211 /* ViewController.swift in Sources */,
+				AF103CC01E5D3816007A1211 /* URLImage.swift in Sources */,
+				AF103CC91E5D3B00007A1211 /* URLImageCache+.swift in Sources */,
+				AF103CC71E5D38F2007A1211 /* URLImageCache.xcdatamodeld in Sources */,
+				AF103CC41E5D3862007A1211 /* UIImageView+URLImage.swift in Sources */,
 				AF103CAD1E5D37D1007A1211 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,6 +332,19 @@
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		AF103CC51E5D38F2007A1211 /* URLImageCache.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				AF103CC61E5D38F2007A1211 /* URLImageCache.xcdatamodel */,
+			);
+			currentVersion = AF103CC61E5D38F2007A1211 /* URLImageCache.xcdatamodel */;
+			path = URLImageCache.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = AF103CA11E5D37D1007A1211 /* Project object */;
 }
