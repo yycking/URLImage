@@ -12,14 +12,18 @@ protocol URLImageDelegate: class {
     func urlImage(image: UIImage?, percent: CGFloat)
 }
 
-public class URLImage: NSObject, URLSessionDownloadDelegate {
+public class URLImage: NSObject {
     fileprivate var url: URL?
     fileprivate var image: UIImage?
-    weak var delegate:URLImageDelegate?
+    weak var delegate: URLImageDelegate?
 
+    fileprivate var remoteImageDataLength: Int64 = 0
+    fileprivate lazy var remoteImageData = Data()
+    fileprivate lazy var downloadDate = Date()
+    
     public func show() {
         guard let url = url else {
-            update(percent: 0)
+            delegate?.urlImage(image: image, percent: 1)
             return
         }
         
@@ -27,18 +31,13 @@ public class URLImage: NSObject, URLSessionDownloadDelegate {
             if let img = URLImageCache.get(url: url) {
                 self.image = img
             }
+            self.delegate?.urlImage(image: self.image, percent: 1)
             
-            let req = NSMutableURLRequest(url: url)
             let config = URLSessionConfiguration.default
             let session = URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue.main)
-            
-            session.downloadTask(with: req as URLRequest).resume()
+            session.dataTask(with: url).resume()
             session.finishTasksAndInvalidate()
         }
-    }
-    
-    func update(percent: CGFloat) {
-        delegate?.urlImage(image: image, percent: percent)
     }
     
     public func remote(url: String) -> URLImage {
@@ -50,20 +49,46 @@ public class URLImage: NSObject, URLSessionDownloadDelegate {
         self.image = UIImage(named: image)
         return self
     }
-    
-    // MARK URLSessionDelegate
-    
-    public func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
-                    didWriteData bytesWritten: Int64, totalBytesWritten writ: Int64, totalBytesExpectedToWrite exp: Int64) {
-        let percent = CGFloat(writ) / CGFloat(exp)
-        if percent != 1 {
-            update(percent: percent)
+}
+
+import ImageIO
+// MARK URLSessionDataDelegate
+extension URLImage: URLSessionDataDelegate {
+    public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Swift.Void) {
+        guard response.mimeType?.hasPrefix("image") == true else {
+            completionHandler(.cancel)
+            return
         }
+        
+        remoteImageDataLength = response.expectedContentLength
+        completionHandler(.allow);
     }
     
-    public func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL){
-        image = URLImageCache.add(task: downloadTask, location: location)
+    public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+        remoteImageData.append(data)
+        let percent = CGFloat(remoteImageData.count) / CGFloat(remoteImageDataLength)
         
-        update(percent: 1)
+        guard
+            percent == 1 || downloadDate + 1 < Date(),
+            let image = UIImage(data: remoteImageData)
+            else { return }
+        
+        downloadDate = Date()
+        
+        if percent == 1 {
+            URLImageCache.add(task: dataTask, image: image)
+        }
+        delegate?.urlImage(image: image, percent: percent)
+        
+//        let imageSourceRef = CGImageSourceCreateIncremental(nil)
+//        CGImageSourceUpdateData(imageSourceRef, remoteImageData as CFData, percent == 1)
+//        if let imageRef = CGImageSourceCreateImageAtIndex(imageSourceRef, 0, nil) {
+//            let remoteImage = UIImage(cgImage: imageRef)
+//
+//            if percent == 1 {
+//                URLImageCache.add(task: dataTask, image: remoteImage)
+//            }
+//            delegate?.urlImage(image: remoteImage, percent: percent)
+//        }
     }
 }

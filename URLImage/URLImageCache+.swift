@@ -32,20 +32,13 @@ extension URLImageCache {
         return results.first
     }
     
-    static func add(task: URLSessionDownloadTask, location: URL) -> UIImage? {
-        guard
-            let data = try? Data(contentsOf: location),
-            let img = UIImage(data: data)
-            else { return nil }
-
-        guard let url = task.currentRequest?.url else { return img}
+    static func add(task: URLSessionTask, image: UIImage) {
+        guard let url = task.currentRequest?.url else { return}
         
         let cache = load(url: url) ?? (NSEntityDescription.insertNewObject(forEntityName: entityName, into: moc) as! URLImageCache)
         
-        cache.image = NSData(contentsOf: location)
+        cache.image = UIImagePNGRepresentation(image) as NSData?
         cache.url = url.absoluteString
-        
-        return img
     }
     
     static func get(url: URL) -> UIImage? {

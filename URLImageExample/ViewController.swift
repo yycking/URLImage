@@ -30,7 +30,7 @@ class ViewController: UITableViewController {
         let imageView = cell.viewWithTag(10) as? UIImageView
         imageView?.urlImage
             .local(image: "user")
-            .remote(url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Superman-facebook.svg/2000px-Superman-facebook.svg.png")
+            .remote(url: "https://upload.wikimedia.org/wikipedia/commons/d/d6/Gemeente_Nieuwer-Amstel,_foto_1_Jacob_Olie_(max_res).jpg")
             .show()
         
         return cell
